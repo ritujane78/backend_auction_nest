@@ -1,7 +1,8 @@
 const pool = require('./db');
 
+
 const getUserByUsername = (username, callback) => {
-  pool.query('SELECT COUNT(*) AS count FROM users_test WHERE username = ?', [username], callback);
+  pool.query('SELECT * FROM users WHERE username = ?', [username], callback);
 };
 
 // const getCurrentUser = ()
