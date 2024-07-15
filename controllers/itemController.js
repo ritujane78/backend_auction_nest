@@ -9,7 +9,7 @@ const uploadItem = upload.single('image');
 const saveItem = (req, res) => {
   const image = req.file.buffer;
   const imageType = req.file.mimetype;
-  const { title, description, startingPrice, size, isDonated, userId } = req.body;
+    const { title, description, startingPrice, size, isDonated, userId } = req.body;
 
   insertItem(image, imageType, title, description, startingPrice, size, isDonated, userId, (err, result) => {
     if (err) {
@@ -32,8 +32,11 @@ const getItems = (req, res) => {
       title: row.title,
       description: row.description,
       size: row.size,
-      startingPrice: row.starting_price
+      startingPrice: row.starting_price,
+      currentPrice: row.current_price,
+      isDonated : row.is_donated
     }));
+    // console.log(items);
     res.json(items);
   });
 };

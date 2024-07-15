@@ -11,7 +11,7 @@ const insertItem = (image, imageType, title, description,starting_price, size, i
 
 
 const getAllItems = (callback) => {
-  const sql = 'SELECT item_id, user_id, title, description, starting_price, image, image_type, size FROM items';
+  const sql = 'SELECT item_id, user_id, title, description, starting_price, image, is_donated, image_type, size, current_price FROM items';
   pool.query(sql, callback);
 };
 
