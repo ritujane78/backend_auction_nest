@@ -9,13 +9,14 @@ const uploadItem = upload.single('image');
 const saveItem = (req, res) => {
   const image = req.file.buffer;
   const imageType = req.file.mimetype;
-  const { title, description } = req.body;
+  const { title, description, startingPrice, size, isDonated, userId } = req.body;
 
-  insertItem(image, imageType, title, description, (err, result) => {
+  insertItem(image, imageType, title, description, startingPrice, size, isDonated, userId, (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    res.send('Item uploaded and saved to database');
+    res.status(200).json({ message: 'Item uploaded successfully.'});
+    
   });
 };
 
@@ -25,11 +26,13 @@ const getItems = (req, res) => {
       return res.status(500).json({ error: err.message });
     }
     const items = result.map(row => ({
-      id: row.id,
+      id: row.item_id,
       image: row.image.toString('base64'),
       type: row.image_type,
       title: row.title,
-      description: row.description
+      description: row.description,
+      size: row.size,
+      startingPrice: row.starting_price
     }));
     res.json(items);
   });
