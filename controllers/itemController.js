@@ -1,5 +1,5 @@
 const multer = require('multer');
-const { insertItem, getAllItems } = require('../models/item');
+const { insertItem, getAllItems, updateFinalPrice } = require('../models/item');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -9,9 +9,9 @@ const uploadItem = upload.single('image');
 const saveItem = (req, res) => {
   const image = req.file.buffer;
   const imageType = req.file.mimetype;
-    const { title, description, startingPrice, size, isDonated, userId } = req.body;
+    const { title, description, startingPrice, size, isDonated, category, userId } = req.body;
 
-  insertItem(image, imageType, title, description, startingPrice, size, isDonated, userId, (err, result) => {
+  insertItem(image, imageType, title, description, startingPrice, size, isDonated, category, userId, (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
@@ -34,11 +34,23 @@ const getItems = (req, res) => {
       size: row.size,
       startingPrice: row.starting_price,
       currentPrice: row.current_price,
-      isDonated : row.is_donated
+      isDonated : row.is_donated,
+      auctionStart : row.auction_start_time,
+      auctionEnd : row.auction_end_time
     }));
     // console.log(items);
     res.json(items);
   });
 };
 
-module.exports = { uploadItem, saveItem, getItems };
+
+const updateFinalPrices = (req, res) => {
+  updateFinalPrice((err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(200).json({ message: 'Final prices updated successfully.', result });
+  });
+};
+
+module.exports = { uploadItem, saveItem, getItems, updateFinalPrices };
