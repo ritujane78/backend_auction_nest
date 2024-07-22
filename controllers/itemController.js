@@ -9,9 +9,9 @@ const uploadItem = upload.single('image');
 const saveItem = (req, res) => {
   const image = req.file.buffer;
   const imageType = req.file.mimetype;
-    const { title, description, startingPrice, size, isDonated, category, userId } = req.body;
+    const { title, description, startingPrice, size, isDonated, category, userId, auctionEndDate } = req.body;
 
-  insertItem(image, imageType, title, description, startingPrice, size, isDonated, category, userId, (err, result) => {
+  insertItem(image, imageType, title, description, startingPrice, size, isDonated, category, auctionEndDate, userId, (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }

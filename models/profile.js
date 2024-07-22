@@ -23,7 +23,7 @@ const getUploadsDB = (user_id, callback) => {
 
 const getUserBidsFromDB = (user_id, callback) => {
     const sql = `
-        SELECT b.bid_id, b.item_id, b.bid_amount, b.bid_time, i.image, i.image_type
+        SELECT b.bid_id, b.item_id, b.bid_amount, b.bid_time, i.image, i.image_type, i.auction_end_time
         FROM bids b
         JOIN items i ON b.item_id = i.item_id
         WHERE b.user_id = ? 

@@ -22,7 +22,7 @@ const getUser = (req, res) => {
 }
 const getUploads = (req, res) => {
     const { user_id } = req.params;
-    console.log(user_id);
+    // console.log(user_id);
 
     getUploadsDB(user_id, (err, result) => {
         if (err) {
@@ -33,6 +33,8 @@ const getUploads = (req, res) => {
         const uploads = result.map(item => ({
             item_id: item.item_id,
             category: item.category,
+            auctionEnd : item.auction_end_time,
+            isDonated : item.is_donated,
             description: item.description,
             image: item.image ? item.image.toString('base64') : null,
             image_type: item.image_type
@@ -59,7 +61,8 @@ const getUserBids = (req, res) => {
                         image: bid.image,
                         image_type: bid.image_type
                     },
-                    bids: []
+                    bids: [],
+                    auctionEnd : bid.auction_end_time
                 };
             }
             bidsByItem[bid.item_id].bids.push({
@@ -92,13 +95,10 @@ const getUserWins = (req, res) => {
                         image: bid.image,
                         image_type: bid.image_type
                     },
-                    bids: []
+                    bid_amount : bid.bid_amount,
+                    bid_time : bid.bid_time
                 };
             }
-            bidsByItem[bid.item_id].bids.push({
-                bid_amount: bid.bid_amount,
-                bid_time: bid.bid_time
-            });
         });
 
         // console.log('Bids by item:', bidsByItem);
