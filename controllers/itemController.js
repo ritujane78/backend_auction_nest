@@ -27,6 +27,8 @@ const getItems = (req, res) => {
     }
     const items = result.map(row => ({
       id: row.item_id,
+      user_id: row.user_id,
+      category: row.category,
       image: row.image.toString('base64'),
       type: row.image_type,
       title: row.title,

@@ -101,7 +101,7 @@ const getUserWins = (req, res) => {
             }
         });
 
-        // console.log('Bids by item:', bidsByItem);
+        // console.log('Won', bidsByItem);
         res.json(bidsByItem);
     });
 }
