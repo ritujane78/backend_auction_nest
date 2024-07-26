@@ -87,22 +87,21 @@ const getUserWins = (req, res) => {
             return res.status(500).json({ error: err.message });
         }
         
-        const bidsByItem = {};
-        result.forEach(bid => {
-            if (!bidsByItem[bid.item_id]) {
-                bidsByItem[bid.item_id] = {
+        const winsByItem = {};
+        result.forEach(win => {
+            if (!winsByItem[win.item_id]) {
+                winsByItem[win.item_id] = {
                     itemDetails: {
-                        image: bid.image,
-                        image_type: bid.image_type
+                        image: win.image,
+                        image_type: win.image_type
                     },
-                    bid_amount : bid.bid_amount,
-                    bid_time : bid.bid_time
+                    bid_amount : win.final_price,
                 };
             }
         });
 
         // console.log('Won', bidsByItem);
-        res.json(bidsByItem);
+        res.json(winsByItem);
     });
 }
 

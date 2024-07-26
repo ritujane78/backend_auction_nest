@@ -12,15 +12,16 @@ const insertItem = (image, imageType, title, description,starting_price, size, i
 
 
 const getAllItems = (callback) => {
-  const sql = 'SELECT item_id, user_id, title, description, starting_price, image, auction_start_time, auction_end_time, is_donated, image_type, size, current_price, category FROM items';
+  const sql = 'SELECT item_id, user_id, title, description, starting_price, final_price, winner_id, image, auction_end_time, is_donated, image_type, size, current_price, category FROM items';
   pool.query(sql, callback);
 };
 
 const updateFinalPrice = (callback) => {
   const sql = `
     UPDATE items 
-    SET final_price = current_price 
-    WHERE auction_end_time < NOW() AND current_price IS NOT NULL AND final_price IS NULL
+    SET final_price = current_price,
+    winner_id = bidder_id
+    WHERE auction_end_time < NOW() AND current_price IS NOT NULL AND final_price IS NULL AND winner_id IS NULL
   `;
   pool.query(sql, callback);
 };

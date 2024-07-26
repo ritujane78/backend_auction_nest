@@ -11,6 +11,7 @@ const itemRouter = require('./routers/itemRouter');
 const bidRouter = require('./routers/bidRouter');
 const profileRouter = require('./routers/profileRouter');
 
+
 // Configure body-parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +23,7 @@ app.use('/user', userRouter);
 app.use('/item', itemRouter);
 app.use('/bid', bidRouter);
 app.use('/profile', profileRouter);
+
 
 cron.schedule('*/10 * * * *', async () => {
   try {
