@@ -20,28 +20,6 @@ const getUser = (req, res) => {
         res.json(userInfo[0]);
     });
 }
-const getUploads = (req, res) => {
-    const { user_id } = req.params;
-    // console.log(user_id);
-
-    getUploadsDB(user_id, (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: err.message });
-        }
-
-        const uploads = result.map(item => ({
-            item_id: item.item_id,
-            category: item.category,
-            auctionEnd : item.auction_end_time,
-            isDonated : item.is_donated,
-            description: item.description,
-            image: item.image ? item.image.toString('base64') : null,
-            image_type: item.image_type
-        }));
-        res.json(uploads);
-    });
-}
 
 const getUserBids = (req, res) => {
     const { user_id } = req.params;
@@ -62,7 +40,8 @@ const getUserBids = (req, res) => {
                         image_type: bid.image_type
                     },
                     bids: [],
-                    auctionEnd : bid.auction_end_time
+                    auctionEnd : bid.auction_end_time,
+                    title: bid.title
                 };
             }
             bidsByItem[bid.item_id].bids.push({
@@ -77,32 +56,5 @@ const getUserBids = (req, res) => {
     });
 }
 
-const getUserWins = (req, res) => {
-    const { user_id } = req.params;
-    // console.log('User ID for wins:', user_id);
 
-    getWonBidsFromDB(user_id, (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ error: err.message });
-        }
-        
-        const winsByItem = {};
-        result.forEach(win => {
-            if (!winsByItem[win.item_id]) {
-                winsByItem[win.item_id] = {
-                    itemDetails: {
-                        image: win.image,
-                        image_type: win.image_type
-                    },
-                    bid_amount : win.final_price,
-                };
-            }
-        });
-
-        // console.log('Won', bidsByItem);
-        res.json(winsByItem);
-    });
-}
-
-module.exports = { getUser, getUploads, getUserBids, getUserWins };
+module.exports = { getUser, getUserBids };

@@ -3,13 +3,10 @@ const { getUserByUsername, insertUser } = require('../models/user');
 
 const signup = (req, res) => {
   const { username, password, email, fullName, address, phoneNumber, createdAt, updatedAt } = req.body;
-  console.log(username);
   getUserByUsername(username, (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    console.log(results);
-    console.log(results.length);
   
 
     if (results.length > 0) {

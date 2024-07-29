@@ -28,7 +28,7 @@ app.use('/profile', profileRouter);
 cron.schedule('*/10 * * * *', async () => {
   try {
     await axios.post('http://localhost:3000/item/updateFinalPrices');
-    console.log('Final prices updated successfully.');
+    console.log('Final prices and winners updated successfully.');
   } catch (error) {
     console.error('Error updating final prices:', error);
   }
