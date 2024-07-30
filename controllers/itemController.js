@@ -37,6 +37,7 @@ const getItems = (req, res) => {
       startingPrice: row.starting_price,
       currentPrice: row.current_price,
       isDonated : row.is_donated,
+      auctionStart: row.auction_start_time,
       auctionEnd : row.auction_end_time,
       final_price : row.final_price,
       winner_id: row.winner_id
