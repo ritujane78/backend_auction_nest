@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const axios = require('axios');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 const userRouter = require('./routers/userRouter');
 const itemRouter = require('./routers/itemRouter');
 const bidRouter = require('./routers/bidRouter');
@@ -25,10 +25,10 @@ app.use('/bid', bidRouter);
 
 cron.schedule('*/10 * * * *', async () => {
   try {
-    await axios.post('http://localhost:3000/item/updateFinalPrices');
-    console.log('Final prices and winners updated successfully.');
+    await axios.post('http://localhost:3001/item/updateFinalPrices');
+    console.log('Final updates successfully done in the database.');
   } catch (error) {
-    console.error('Error updating final prices:', error);
+    console.error('Error updating final data to the database', error);
   }
 });
 // Start the server

@@ -15,8 +15,11 @@
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
+    "googleapis": "^140.0.1",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.14",
+    "telnet": "^0.0.1"
   }
 }

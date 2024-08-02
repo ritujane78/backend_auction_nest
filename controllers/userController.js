@@ -77,5 +77,22 @@ const getUser = (req, res) => {
       res.json(userInfo[0]);
   });
 }
+const getUserInternal = (user_id, callback)=>{
+  getUserInfo(user_id, (err, result) => {
+    if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: err.message });
+    }
+    const userInfo = result.map(row => ({
+        name: row.full_name,
+        username: row.username,
+        email: row.email,
+        address : row.address,
+        phone: row.phone_number
+    }))[0];
+    // console.log('User Info:', userInfo);
+    callback(null, userInfo);
+});
+}
 
-module.exports = { signup, signin, getUser };
+module.exports = { signup, signin, getUser, getUserInternal};

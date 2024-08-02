@@ -33,7 +33,14 @@ const getUserBids = (req, res) => {
                   bids: [],
                   auctionStart : bid.auction_start_time,
                   auctionEnd : bid.auction_end_time,
-                  title: bid.title
+                  brandName: bid.brandName,
+                  category: bid.category,
+                  gender: bid.gender,
+                  startingPrice: bid.starting_price,
+                  currentPrice: bid.current_price,
+                  size: bid.size,
+                  description: bid.description,
+                  final_price: bid.final_price
               };
           }
           bidsByItem[bid.item_id].bids.push({

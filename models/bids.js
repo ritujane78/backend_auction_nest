@@ -24,7 +24,7 @@ const insertBid = (user_id, item_id, bid_amount, callback) => {
 };
 const getUserBidsFromDB = (user_id, callback) => {
     const sql = `
-        SELECT b.bid_id, b.item_id, b.bid_amount, b.bid_time, i.image, i.image_type, i.auction_start_time, i.auction_end_time, i.title
+        SELECT b.bid_id, b.item_id, b.bid_amount, b.bid_time, i.image, i.image_type, i.auction_start_time, i.auction_end_time, i.brandName,i.category, i.current_price,i.starting_price, i.gender, i.description, i.size, i.final_price
         FROM bids b
         JOIN items i ON b.item_id = i.item_id
         WHERE b.user_id = ? 
