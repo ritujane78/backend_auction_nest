@@ -1,11 +1,9 @@
 const pool = require('./db');
 
-const insertItem = (image, imageType, brandName, description,starting_price, size, gender, isDonated, category, auctionEndDateString, userId, callback) => {
+const insertItem = (image, imageType, brandName, description,starting_price, size, gender, isDonated, category, auctionEndDate, userId, callback) => {
   
   const createdAt = new Date();
-  // const auctionStartDate = new Date(createdAt.getTime() + 2 * 24 * 60 * 60 * 1000);
   const auctionStartDate = new Date(createdAt.getTime());
-  const auctionEndDate = new Date(auctionEndDateString);
   const sql = 'INSERT INTO items (user_id, brandName, description, starting_price, auction_start_time, auction_end_time, image, created_at, is_donated, image_type, size, gender, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   pool.query(sql, [parseInt(userId), brandName, description, starting_price, auctionStartDate,auctionEndDate, image, createdAt, isDonated, imageType, size, gender, category], callback);
 };
