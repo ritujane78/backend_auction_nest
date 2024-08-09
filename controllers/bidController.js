@@ -40,7 +40,10 @@ const getUserBids = (req, res) => {
                   currentPrice: bid.current_price,
                   size: bid.size,
                   description: bid.description,
-                  final_price: bid.final_price
+                  final_price: bid.final_price,
+                  title: bid.title,
+                  bidder_id: bid.bidder_id,
+                  bid_count: bid.bid_count
               };
           }
           bidsByItem[bid.item_id].bids.push({

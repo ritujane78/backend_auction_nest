@@ -22,12 +22,73 @@ const insertBid = (user_id, item_id, bid_amount, callback) => {
         });
     });
 };
+// const getUserBidsFromDB = (user_id, callback) => {
+//     const sql = `
+//         SELECT b.bid_id, b.item_id, b.bid_amount, b.bid_time, i.image, i.image_type, i.auction_start_time, i.auction_end_time, i.brandName,i.category, i.current_price,i.starting_price, i.gender, i.description, i.size, i.final_price, i.bidder_id
+//         FROM bids b
+//         JOIN items i ON b.item_id = i.item_id
+//         WHERE b.user_id = ? 
+//     `;
+//     pool.query(sql, [parseInt(user_id)], (err, results) => {
+//         if (err) {
+//             console.error('Query error:', err);
+//             return callback(err);
+//         }
+//         const formattedResults = results.map(row => ({
+//             ...row,
+//             image: row.image ? row.image.toString('base64') : null
+//         }));
+//         callback(null, formattedResults);
+//     });
+// }
+
 const getUserBidsFromDB = (user_id, callback) => {
     const sql = `
-        SELECT b.bid_id, b.item_id, b.bid_amount, b.bid_time, i.image, i.image_type, i.auction_start_time, i.auction_end_time, i.brandName,i.category, i.current_price,i.starting_price, i.gender, i.description, i.size, i.final_price
-        FROM bids b
-        JOIN items i ON b.item_id = i.item_id
-        WHERE b.user_id = ? 
+        SELECT 
+            b.bid_id, 
+            b.item_id, 
+            b.bid_amount, 
+            b.bid_time, 
+            i.image, 
+            i.image_type, 
+            i.auction_start_time, 
+            i.auction_end_time, 
+            i.brandName,
+            i.category, 
+            i.current_price,
+            i.starting_price, 
+            i.gender, 
+            i.description, 
+            i.size, 
+            i.final_price, 
+            i.bidder_id,
+            COUNT(b2.bid_id) AS bid_count -- Count of all bids on the item
+        FROM 
+            bids b
+        JOIN 
+            items i ON b.item_id = i.item_id
+        LEFT JOIN 
+            bids b2 ON i.item_id = b2.item_id
+        WHERE 
+            b.user_id = ?
+        GROUP BY 
+            b.bid_id, 
+            b.item_id, 
+            b.bid_amount, 
+            b.bid_time, 
+            i.image, 
+            i.image_type, 
+            i.auction_start_time, 
+            i.auction_end_time, 
+            i.brandName,
+            i.category, 
+            i.current_price,
+            i.starting_price, 
+            i.gender, 
+            i.description, 
+            i.size, 
+            i.final_price, 
+            i.bidder_id
     `;
     pool.query(sql, [parseInt(user_id)], (err, results) => {
         if (err) {
@@ -41,4 +102,5 @@ const getUserBidsFromDB = (user_id, callback) => {
         callback(null, formattedResults);
     });
 }
+
 module.exports = { insertBid, getUserBidsFromDB };

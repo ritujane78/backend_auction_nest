@@ -13,9 +13,9 @@ const uploadItem = upload.single('image');
 const saveItem = (req, res) => {
   const image = req.file.buffer;
   const imageType = req.file.mimetype;
-  const { brandName, description, startingPrice, size, gender, isDonated, category, userId, auctionEndDate } = req.body;
+  const { brandName, description, startingPrice, size, gender, isDonated, category, userId, auctionEndDate, title } = req.body;
 
-  insertItem(image, imageType, brandName, description, startingPrice, size, gender, isDonated, category, auctionEndDate, userId, (err, result) => {
+  insertItem(image, imageType, brandName, description, startingPrice, size, gender, isDonated, category, auctionEndDate, title, userId, (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
@@ -44,7 +44,10 @@ const getItems = (req, res) => {
       auctionStart: row.auction_start_time,
       auctionEnd: row.auction_end_time,
       final_price: row.final_price,
-      winner_id: row.winner_id
+      winner_id: row.winner_id,
+      title: row.title,
+      bidder_id: row.bidder_id,
+      bid_count: row.bid_count
     }));
     res.json(items);
   });
