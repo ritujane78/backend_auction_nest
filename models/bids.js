@@ -108,7 +108,8 @@ const getBidHistory = (item_id, callback) => {
     const sql = `
         SELECT 
             u.user_id,
-            u.username, 
+            u.username,
+            u.full_name, 
             u.email, 
             b.bid_id, 
             b.item_id, 
