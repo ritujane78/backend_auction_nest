@@ -1,9 +1,8 @@
-const { insertBid, getUserBidsFromDB } = require('../models/bids');
+const { insertBid, getUserBidsFromDB, getBidHistory } = require('../models/bids');
 
 const saveBid = (req, res) => {
 
-const { user_id, item_id, bid_amount} = req.body
-
+  const { user_id, item_id, bid_amount} = req.body
 
   insertBid( user_id,item_id, bid_amount, (err, result) => {
     if (err) {
@@ -31,6 +30,7 @@ const getUserBids = (req, res) => {
                       image_type: bid.image_type
                   },
                   bids: [],
+                  id:bid.item_id,
                   auctionStart : bid.auction_start_time,
                   auctionEnd : bid.auction_end_time,
                   brandName: bid.brandName,
@@ -43,6 +43,7 @@ const getUserBids = (req, res) => {
                   final_price: bid.final_price,
                   title: bid.title,
                   bidder_id: bid.bidder_id,
+                  winner_id: bid.winner_id,
                   bid_count: bid.bid_count
               };
           }
@@ -59,4 +60,16 @@ const getUserBids = (req, res) => {
 }
 
 
-module.exports = { saveBid, getUserBids };
+const bidHistory = (req, res) => {
+  const { id } = req.params;
+
+  getBidHistory(id, (err, result) => {
+      if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: err.message });
+      }
+      res.json(result);
+  });
+}
+
+module.exports = { saveBid, getUserBids, bidHistory };

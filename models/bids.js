@@ -62,6 +62,7 @@ const getUserBidsFromDB = (user_id, callback) => {
             i.size, 
             i.final_price, 
             i.bidder_id,
+            i.winner_id,
             COUNT(b2.bid_id) AS bid_count -- Count of all bids on the item
         FROM 
             bids b
@@ -88,7 +89,8 @@ const getUserBidsFromDB = (user_id, callback) => {
             i.description, 
             i.size, 
             i.final_price, 
-            i.bidder_id
+            i.bidder_id,
+            i.winner_id
     `;
     pool.query(sql, [parseInt(user_id)], (err, results) => {
         if (err) {
@@ -102,5 +104,31 @@ const getUserBidsFromDB = (user_id, callback) => {
         callback(null, formattedResults);
     });
 }
+const getBidHistory = (item_id, callback) => {
+    const sql = `
+        SELECT 
+            u.user_id,
+            u.username, 
+            u.email, 
+            b.bid_id, 
+            b.item_id, 
+            b.bid_amount, 
+            b.bid_time
+        FROM 
+            users u
+        JOIN 
+            bids b ON u.user_id = b.user_id AND b.item_id = ?
+        WHERE 
+            b.item_id IS NULL OR b.item_id = ?;
+    `;
+    pool.query(sql, [parseInt(item_id), parseInt(item_id)], (err, results) => {
+        if (err) {
+            console.error('Query error:', err);
+            return callback(err);
+        }
+        callback(null, results);
+    });
+}
 
-module.exports = { insertBid, getUserBidsFromDB };
+
+module.exports = { insertBid, getUserBidsFromDB, getBidHistory };
