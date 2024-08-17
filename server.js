@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const cron = require('node-cron');
 const axios = require('axios');
 
@@ -15,7 +14,6 @@ const bidRouter = require('./routers/bidRouter');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(express.static('public'));
 
 // Use routers
 app.use('/user', userRouter);

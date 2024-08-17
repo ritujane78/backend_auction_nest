@@ -120,7 +120,7 @@ const updateFinalPrices = (req, res) => {
               winnerEmail,
               'Congratulations!',
               `You won the auction for ${item.brandName}. Your final price is £${item.final_price}.`,
-              `<p>Congratulations! You won the auction for <b>${item.brandName} ${item.category} </b>. </p> <p>Your final price is <b>£${item.final_price}</b>.</p>`
+              `<p>Congratulations! You won the auction for <b>${item.brandName} ${item.title? item.title:item.category} </b>. </p> <p>Your final price is <b>£${item.final_price}</b>.</p>`
             );
 
 
@@ -136,7 +136,7 @@ const updateFinalPrices = (req, res) => {
               userEmail,
               'Auction Ended!',
               `The auction for your item ${item.brandName} ${item.category} has ended. The final price is £${item.final_price}`,
-              `<p> The auction for your item ${item.brandName} ${item.category} has ended.</p><p>The final price is <b>£${item.final_price}</b>.</p>`
+              `<p> The auction for your item ${item.brandName} ${item.title?item.title:item.category} has ended.</p><p>The final price is <b>£${item.final_price}</b>.</p>`
             );
           });
           updateIsEmailSent(item.item_id, true, (errUpdate) => {
