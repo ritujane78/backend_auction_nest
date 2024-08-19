@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const { insertItem, getAllItems, updateFinalPrice } = require('../models/item');
 const { getUserInternal } = require('./userController');
 const { updateItemEmailStatus } = require('../models/item');
+const { insertWinnerAndUploaderNotifications } = require('../models/notification');
 
 
 const storage = multer.memoryStorage();
@@ -122,6 +123,11 @@ const updateFinalPrices = (req, res) => {
               `You won the auction for ${item.brandName}. Your final price is £${item.final_price}.`,
               `<p>Congratulations! You won the auction for <b>${item.brandName} ${item.title? item.title:item.category} </b>. </p> <p>Your final price is <b>£${item.final_price}</b>.</p>`
             );
+            insertWinnerAndUploaderNotifications(item.item_id, item.winner_id, item.user_id, item.final_price, (errNotif) => {
+              if (errNotif) {
+                  console.error('Error inserting notifications:', errNotif);
+              }
+          });
 
 
           });
