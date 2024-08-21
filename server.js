@@ -9,6 +9,7 @@ const userRouter = require('./routers/userRouter');
 const itemRouter = require('./routers/itemRouter');
 const bidRouter = require('./routers/bidRouter');
 const notificationRouter = require('./routers/notificationRouter');
+const emailRouter = require('./routers/emailRouter');
 
 
 // Configure body-parser middleware
@@ -21,6 +22,7 @@ app.use('/user', userRouter);
 app.use('/item', itemRouter);
 app.use('/bid', bidRouter);
 app.use('/notification', notificationRouter);
+app.use('/email',emailRouter);
 
 cron.schedule('*/10 * * * *', async () => {
   try {

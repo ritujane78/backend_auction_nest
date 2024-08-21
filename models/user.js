@@ -24,4 +24,17 @@ const getUserInfo = (user_id, callback) => {
   });
 }
 
-module.exports = { getUserByUsername, insertUser, getUserInfo };
+const getUserEmail = (user_id, callback) => {
+  const sql = 'SELECT email FROM users WHERE user_id = ? LIMIT 1';
+  pool.query(sql, [parseInt(user_id)], (err, results) => {
+      if (err) {
+          console.error('Query error:', err);
+          return callback(err);
+      }
+      callback(null, results);
+  });
+}
+
+
+
+module.exports = { getUserByUsername, insertUser, getUserInfo, getUserEmail };

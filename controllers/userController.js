@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { getUserByUsername, insertUser, getUserInfo } = require('../models/user');
+const { getUserByUsername, insertUser, getUserInfo, getUserEmail } = require('../models/user');
 
 const signup = (req, res) => {
   const { username, password, email, fullName, address, phoneNumber, createdAt, updatedAt } = req.body;
@@ -95,4 +95,16 @@ const getUserInternal = (user_id, callback)=>{
 });
 }
 
-module.exports = { signup, signin, getUser, getUserInternal};
+const userEmail = (req, res) => {
+  const { user_id } = req.params;
+
+  getUserEmail(user_id, (err, result) => {
+      if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: err.message });
+      }
+      res.json(result);
+  });
+}
+
+module.exports = { signup, signin, getUser, getUserInternal, userEmail};
