@@ -24,19 +24,6 @@ It provides RESTful APIs for user management, auctions, bidding, and real-time u
 - **Swagger Documentation**: Interactive API testing  
 
 ---
-
-## 📁 Project Structure
-
-├── src/
-│ ├── controllers/ # Request handlers
-│ ├── modules/ # Application modules
-│ ├── models/ # Mongoose schemas
-│ ├── services/ # Business logic
-│ ├── main.ts # Application entry point
-├── .env # Environment variables
-├── package.json # Dependencies and scripts
-├── README.md # Project documentation
-
 ## ⚙️ Installation
 
 1. **Clone the repository:**
