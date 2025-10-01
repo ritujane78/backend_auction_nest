@@ -1,17 +1,14 @@
 # Backend Auction Nest
 
-A backend application built with **NestJS** to power an online auction platform.  
-It provides RESTful APIs for user management, auctions, bidding, and real-time updates.
+A backend application built with **Node.js** to power an online auction platform.  
+It provides RESTful APIs for user management, auctions, bidding and notificying bidders, winners, participants.
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Backend Framework**: [NestJS](https://nestjs.com/)  
-- **Database**: [MongoDB](https://www.mongodb.com/) via [Mongoose](https://mongoosejs.com/)  
-- **Authentication**: JWT (JSON Web Tokens)  
-- **Real-Time Updates**: Socket.IO  
-- **API Documentation**: Swagger  
+- **Backend Framework**: [Node.js](https://nodejs.org/) with [Express](https://expressjs.com/)  
+- **Database**: [MySQL](https://www.mysql.com/)  
 
 ---
 
@@ -20,8 +17,7 @@ It provides RESTful APIs for user management, auctions, bidding, and real-time u
 - **User Authentication**: Registration, login, and JWT-based sessions  
 - **Auction Management**: Create, update, delete auctions  
 - **Bidding System**: Place and track bids in real time  
-- **Real-Time Updates**: Live auction notifications via WebSocket  
-- **Swagger Documentation**: Interactive API testing  
+
 
 ---
 ## ⚙️ Installation
